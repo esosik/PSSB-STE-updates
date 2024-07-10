@@ -1,0 +1,84 @@
+"","Taxon.Name","2012.Clinger","2012.Intolerant","2012.Long.Lived","2012.Predator","2012.Tolerant"
+"34","Eiseniella tetraedra",FALSE,FALSE,FALSE,FALSE,FALSE
+"56","Protzia exima",FALSE,FALSE,FALSE,FALSE,FALSE
+"164","Athericidae",FALSE,FALSE,FALSE,TRUE,FALSE
+"167","Glutops bandus",FALSE,FALSE,FALSE,TRUE,FALSE
+"214","Tribelos jucundus",FALSE,FALSE,FALSE,FALSE,FALSE
+"218","Constempellina brevicosta",FALSE,FALSE,FALSE,FALSE,FALSE
+"225","Sublettea coffmani",FALSE,FALSE,FALSE,FALSE,FALSE
+"245","Cricotopus (Cricotopus)",TRUE,FALSE,FALSE,FALSE,FALSE
+"246","Cricotopus bicinctus",TRUE,FALSE,FALSE,FALSE,FALSE
+"247","Cricotopus trifascia",TRUE,FALSE,FALSE,FALSE,FALSE
+"248","Cricotopus (Isocladius)",TRUE,FALSE,FALSE,FALSE,FALSE
+"249","Cricotopus (Nostococladius)",TRUE,FALSE,FALSE,FALSE,FALSE
+"253","Diplocladius cultriger",FALSE,FALSE,FALSE,FALSE,TRUE
+"255","Eukiefferiella cf. tirolensis",FALSE,FALSE,FALSE,FALSE,FALSE
+"256","Eukiefferiella claripennis",FALSE,FALSE,FALSE,FALSE,FALSE
+"257","Eukiefferiella coerulescens",FALSE,FALSE,FALSE,FALSE,FALSE
+"269","Heterotrissocladius marcidus",FALSE,FALSE,FALSE,FALSE,FALSE
+"278","Orthocladius (Euorthocladius)",FALSE,FALSE,FALSE,FALSE,FALSE
+"279","Orthocladius (Symposiocladius)",FALSE,FALSE,FALSE,FALSE,FALSE
+"280","Orthocladius lignicola",FALSE,FALSE,FALSE,FALSE,FALSE
+"290","Psilometriocnemus triannulatus",FALSE,FALSE,FALSE,FALSE,FALSE
+"295","Thienemannia gracilis",FALSE,FALSE,FALSE,FALSE,FALSE
+"298","Tvetenia bavarica",FALSE,FALSE,FALSE,FALSE,FALSE
+"299","Tvetenia vitracies",FALSE,FALSE,FALSE,FALSE,FALSE
+"301","Xylotopus par",FALSE,FALSE,FALSE,FALSE,FALSE
+"312","Brundiniella eumorpha",FALSE,FALSE,FALSE,TRUE,FALSE
+"314","Macropelopia decedens",FALSE,FALSE,FALSE,TRUE,FALSE
+"343","Simulium canadense",TRUE,FALSE,FALSE,FALSE,TRUE
+"344","Simulium venustum",TRUE,FALSE,FALSE,FALSE,TRUE
+"380","Gerrinae",FALSE,FALSE,FALSE,TRUE,FALSE
+"382","Aquarius remigis",FALSE,FALSE,FALSE,TRUE,FALSE
+"400","Perlomyia",FALSE,FALSE,FALSE,FALSE,FALSE
+"439","Setvena tibialis",TRUE,FALSE,TRUE,TRUE,FALSE
+"462","Arctopsyche grandis",TRUE,TRUE,TRUE,TRUE,FALSE
+"464","Parapsyche almota",TRUE,FALSE,TRUE,TRUE,TRUE
+"465","Parapsyche elsis",TRUE,FALSE,TRUE,TRUE,FALSE
+"466","Ceratopsyche amblis",TRUE,FALSE,FALSE,FALSE,FALSE
+"467","Ceratopsyche oslari",TRUE,FALSE,FALSE,FALSE,FALSE
+"474","Psychomyia flavida",TRUE,FALSE,FALSE,FALSE,FALSE
+"480","Leucotrichia pictipes",TRUE,FALSE,FALSE,FALSE,FALSE
+"482","Heteroplectron californicum",FALSE,FALSE,FALSE,FALSE,FALSE
+"488","Pedomoecus sierra",FALSE,FALSE,FALSE,FALSE,FALSE
+"490","Apatania sorex",TRUE,TRUE,FALSE,FALSE,FALSE
+"493","Amiocentrus aspilus",TRUE,FALSE,FALSE,FALSE,FALSE
+"495","Brachycentrus americanus",TRUE,FALSE,FALSE,FALSE,FALSE
+"496","Brachycentrus occidentalis",TRUE,FALSE,FALSE,FALSE,FALSE
+"499","Micrasema dimicki",TRUE,FALSE,FALSE,FALSE,FALSE
+"502","Goeracea genota",FALSE,FALSE,FALSE,FALSE,FALSE
+"505","Lepidostoma togatum",FALSE,FALSE,FALSE,FALSE,FALSE
+"506","Lepidostoma cascadense",FALSE,FALSE,FALSE,FALSE,FALSE
+"507","Lepidostoma hoodi",FALSE,FALSE,FALSE,FALSE,FALSE
+"512","Allocosmoecus partitus",TRUE,FALSE,FALSE,FALSE,FALSE
+"515","Dicosmoecus atripes",TRUE,FALSE,FALSE,FALSE,FALSE
+"516","Dicosmoecus gilvipes",TRUE,FALSE,FALSE,FALSE,FALSE
+"518","Ecclisocosmoecus scylla",FALSE,FALSE,TRUE,FALSE,FALSE
+"521","Onocosmoecus unicolor",FALSE,FALSE,FALSE,FALSE,FALSE
+"525","Psychoglypha bella",FALSE,FALSE,FALSE,FALSE,FALSE
+"526","Psychoglypha subborealis",FALSE,FALSE,FALSE,FALSE,FALSE
+"527","Chyrandra centralis",FALSE,FALSE,FALSE,FALSE,FALSE
+"529","Hydatophylax hesperus",FALSE,FALSE,FALSE,FALSE,FALSE
+"532","Neophylax occidentis",TRUE,TRUE,FALSE,FALSE,FALSE
+"533","Neophylax rickeri",TRUE,TRUE,FALSE,FALSE,FALSE
+"534","Neophylax splendens",TRUE,TRUE,FALSE,FALSE,FALSE
+"545","Rhyacophila angelita",TRUE,FALSE,FALSE,TRUE,FALSE
+"546","Rhyacophila arnaudi",TRUE,TRUE,FALSE,TRUE,FALSE
+"547","Rhyacophila betteni",TRUE,FALSE,FALSE,TRUE,FALSE
+"548","Rhyacophila blarina",FALSE,FALSE,FALSE,TRUE,FALSE
+"549","Rhyacophila brunnea",TRUE,FALSE,TRUE,TRUE,FALSE
+"550","Rhyacophila grandis",FALSE,FALSE,FALSE,TRUE,FALSE
+"551","Rhyacophila hyalinata",TRUE,FALSE,FALSE,TRUE,FALSE
+"552","Rhyacophila inculta",TRUE,FALSE,FALSE,TRUE,FALSE
+"553","Rhyacophila malkini",TRUE,FALSE,FALSE,TRUE,FALSE
+"554","Rhyacophila narvae",TRUE,FALSE,FALSE,TRUE,FALSE
+"555","Rhyacophila pellisa",TRUE,FALSE,FALSE,TRUE,FALSE
+"556","Rhyacophila sibirica",TRUE,FALSE,FALSE,TRUE,FALSE
+"557","Rhyacophila valuma",TRUE,FALSE,FALSE,TRUE,FALSE
+"558","Rhyacophila vuzana",TRUE,FALSE,FALSE,TRUE,FALSE
+"571","Rhyacophila Vemna Group",TRUE,FALSE,TRUE,TRUE,FALSE
+"574","Helicopsyche borealis",TRUE,FALSE,FALSE,FALSE,FALSE
+"582","Leptophlebia",FALSE,FALSE,FALSE,FALSE,FALSE
+"652","Stenonema",TRUE,FALSE,FALSE,FALSE,FALSE
+"678","Ferrissia rivularis",FALSE,FALSE,FALSE,FALSE,FALSE
+"695","Pristinicola hemphilli",FALSE,FALSE,TRUE,FALSE,FALSE
