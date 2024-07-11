@@ -1,3 +1,5 @@
+###This code is to check that the draft mappings, STE updates and attribute updates populate correctly. The draft changes were all based on data through 2022, but this code uses taxa downloaded in spring of 2024. As a result, there are some new taxa that are not in the BCG translation table, and so don't have mappings assigned. We'll need to work with Sean and the BCG group in 2025 to review these new taxa (plus whichever taxa are new in 2025).
+
 
 library(plyr)
 library(openxlsx)
@@ -6,8 +8,9 @@ library(stringr)
 library(tidyverse)
 library(dplyr)
 getwd()
-# setwd("G:/GreenWQA/Biota/PSP/2023_indicator_update")
+
 setwd("C:/Users/esosik/King County/DNRP - Science TCA Unit - Bug Monitoring/PSSB issues/STE_attrib_updates")
+
 
 taxaBind <- function(file.path) {
   
@@ -32,12 +35,11 @@ PSSB_taxa<-unique(PSSB_taxa)
 ###########BCG TRANSLATION##########
 setwd("C:/Users/esosik/King County/DNRP - Science TCA Unit - Bug Monitoring/PSSB issues/STE_attrib_updates")
 
-# lookup<-read.csv("ORWA_TaxaTranslator_20240417.csv")
 lookup<-read.xlsx("STE_Mapping_Atts_Draft.xlsx", detectDates = T, sheet="Draft Mapping")
 
 ##Translate PSSB taxa into BCG harmonized taxa
 OTU<-merge(PSSB_taxa, subset(lookup, select=-`Same?`), by.x=c("Taxon","Taxon.Serial.Number"), by.y=c("Taxon", "Taxon.Serial.Number"), all.x=T)
-# OTU<-merge(PSSB_taxa, subset(lookup, select=c(Taxon, OTU_MetricCalc)), by.x="Taxon", by.y="Taxon", all.x=T)
+
 
 
 ##NOTE: These are PSSB taxa that are missing from the BCG translation table. Need Sean to update. 
@@ -47,9 +49,6 @@ write.csv(missing, "missing_from_BCG_05162024.csv")
 ##Where taxa are missing from BCG translation table, just use the PSSB Taxon value
 OTU[which(is.na(OTU$OTU_MetricCalc)), "OTU_MetricCalc"] <-OTU[which(is.na(OTU$OTU_MetricCalc)), "Taxon"]
 OTU[which(is.na(OTU$Mapped.Taxon.Serial.Number)), "Mapped.Taxon.Serial.Number"] <-OTU[which(is.na(OTU$Mapped.Taxon.Serial.Number)), "Taxon.Serial.Number"]
-
-# DNI<-OTU[which(OTU$OTU=="DNI"),"Taxon"]###These are marked as "DNI" in BCG translation table, but they aren't necessarily on B-IBI exclusion list. Adding back in for now.
-# OTU[which(OTU$OTU_MetricCalc=="DNI"),"OTU_MetricCalc"]<-OTU[which(OTU$OTU_MetricCalc=="DNI"),"Taxon"]###These are marked as "DNI" in BCG translation table, but they aren't on B-IBI exclusion list. Adding back in for now.
 
 names(lookup)
 names(OTU)
@@ -62,17 +61,16 @@ test[which(duplicated(test[,2:24])),] #Rhyacophila Ecosa Group is in PSSB with t
 ##NOTE: This assumes hierarchies in PSSB are correct, AND in correct order-- Discuss with Kate!
 ##SIDE NOTE: Do we need levels like infraorder? Do we believe labs are using these levels uniformly?
 OTU_correct_hier<-merge(OTU[,c("OTU_MetricCalc", "Taxon","Taxon.Serial.Number", "Mapped.Taxon.Serial.Number")], unique(PSSB_taxa[,c(1:24)]), by.x=c("OTU_MetricCalc", "Mapped.Taxon.Serial.Number"), by.y=c("Taxon", "Taxon.Serial.Number"), all.x=T)
-# names(OTU_correct_hier)[3]<-"Taxon.Serial.Number"
-# names(OTU_correct_hier)[4]<-"Mapped.Taxon.Serial.Number"
+
 ##For Taxa that aren't in PSSB taxa table, split out, append BCG hierarchy, and re-join
-##NOTE: we should add these to PSSB
+##NOTE: we should add these to PSSB if they aren't already there. BAS added these as of spring 2024. But there's no download available of all PSSB hierarchies, and since we're matching back to the PSSB taxa download, these still show up as unmatched.
 fix<-OTU_correct_hier[which(is.na(OTU_correct_hier$Phylum)),]
 OTU_correct_hier<-OTU_correct_hier[which(!is.na(OTU_correct_hier$Phylum)),]
 # write.csv(fix[,c("OTU_MetricCalc", "Taxon","Taxon.Serial.Number")], "missing_from_PSSB_05102024.csv")
 BCG_atts<-read.csv("ORWA_Attributes_20240417.csv")
 names(BCG_atts)
 BCG_atts[,c(1, 22,24:40)]
-# fix<-merge(fix[,c("OTU_MetricCalc", "Taxon","Taxon.Serial.Number")], unique(lookup[,c(2, 11:27)]), by.x="OTU_MetricCalc", by.y="Taxon_orig", all.x=T)
+
 fix<-merge(fix[,c("OTU_MetricCalc", "Taxon","Taxon.Serial.Number", "Mapped.Taxon.Serial.Number")], unique(BCG_atts[,c(1, 24:40)]), by.x=c("OTU_MetricCalc"), by.y=c("Taxon"), all.x=T)
 
 names(OTU_correct_hier)
@@ -93,10 +91,9 @@ fix$Subspecies<-NA
 
 names(OTU_correct_hier)
 names(fix)
-names(fix[,c(1:6,20, 7:8, 21:22,9:10, 23,11:13,24,14:15,25,16, 18, 17,19,26)])
-fix<-fix[,c(1:6,20, 7:8, 21:22,9:10, 23,11:13,24,14:15,25,16, 18, 17,19,26)]
-# fix$Mapped.Taxon.Serial.Number<-NA
-# fix<-fix[,c(1:3, 26, 4:25)]
+names(fix[,c(1, 4, 2,3, 5:6,20, 7:8, 21:22,9:10, 23,11:13,24,14:15,25,16, 18, 17,19,26)])==names(OTU_correct_hier)
+fix<-fix[,c(1, 4, 2,3, 5:6,20, 7:8, 21:22,9:10, 23,11:13,24,14:15,25,16, 18, 17,19,26)]
+
 names(fix)<-names(OTU_correct_hier)
 OTU_correct_hier<-rbind(OTU_correct_hier, fix)
 OTU_correct_hier[is.na(OTU_correct_hier)]<-""
@@ -118,7 +115,6 @@ test<-OTU_correct_hier[,c(5:26, 1)]
 for (i in 1:ncol(test)){
   k<-(ncol(test)+1)-i ##work backwards through the hierarchy columns
   attribs<-merge(exlude, test[, c(k, 23)], by.x="Taxon.Name", by.y=names(test[k]))
-  # names(attribs)<-str_replace(names(attribs), "2012.", "")
   names(attribs)<-str_replace(names(attribs), "OTU_MetricCalc.1", "OTU_MetricCalc")
   exlude2<-rbind(attribs, exlude2)
   test<-subset(test, !OTU_MetricCalc %in% exlude2$OTU_MetricCalc)
@@ -129,10 +125,7 @@ names(exlude2)[1]<-"Exclusion_reason"
 OTU_correct_hier<-merge(OTU_correct_hier, exlude2, all.x=T)
 
 exlude_no_match2<-exlude[!exlude$Taxon.Name %in% OTU_correct_hier$Exclusion_reason,]
-# PSSB_taxa2<-PSSB_taxa
-# 
-# ##remove excluded taxa from the master list
-# PSSB_taxa<-subset(PSSB_taxa, Excluded!=TRUE|is.na(Excluded), select=c(-Exclusion_reason, -Excluded))
+
 
 ######################## Coarse STE roll-up########################
 OTU_correct_hier[which(OTU_correct_hier$Subclass=="Oligochaeta"),"Coarse_STE"]<-"Oligochaeta"
@@ -417,7 +410,6 @@ OTU_correct_hier[which(is.na(OTU_correct_hier$Medium_STE_rank)),"Medium_STE_rank
                                                                                                                                                                                                                                              ifelse(Phylum==Medium_STE, "Phylum",
                                                                                                                                                                                                                                                     
                                                                                                                                                                                                                                                     NA)))))))))))))))))))))))
-##Note to Sean, need to change species level for Perlinodes aureus and Matriella teresa in BCG table. Need something for Genus group Neaviperla/Suwallia besides tribe
 test<-OTU_correct_hier[which(is.na(OTU_correct_hier$Medium_STE_rank)),]
 ###############################################
 ######################## Fine STE roll-up###############
@@ -667,7 +659,6 @@ OTU_correct_hier[which(is.na(OTU_correct_hier$Fine_STE_rank)),"Fine_STE_rank"]<-
                                                                                                                                                                                                                                              ifelse(Phylum==Fine_STE, "Phylum",
                                                                                                                                                                                                                                                     
                                                                                                                                                                                                                                                     NA)))))))))))))))))))))))
-##Note to Sean, need to change species level for Perlinodes aureus and Matriella teresa in BCG table. Need something for Genus group Neaviperla/Suwallia besides tribe
 test<-OTU_correct_hier[which(is.na(OTU_correct_hier$Fine_STE_rank)),"Fine_STE"]
 #############################################
 ### where the Fine STE resolves to species through Species.Group, adjust the names to they match attribute tables correctly
@@ -680,7 +671,7 @@ OTU_correct_hier[OTU_correct_hier$Fine_STE_rank=="Species.Group"& OTU_correct_hi
 
 ##read in PSSB attribute table
 atts<-read.xlsx("STE_Mapping_Atts_Draft.xlsx", detectDates = T, sheet="Draft Attributes")
-# atts<-read.xlsx("G:/GreenWQA/Biota/Contracts/Bellevue/2023 Report/for trends analysis/2012_taxa_attributes.xlsx")
+
 atts<-subset(atts, select=c(Taxon.Name, `2012.Clinger`, `2012.Intolerant`, `2012.Long.Lived`, `2012.Predator`, `2012.Tolerant`))
 
 
