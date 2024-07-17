@@ -8,6 +8,8 @@ PSSBmapping<-read.xlsx("STE_Mapping_Atts_Draft.xlsx", detectDates = T, sheet="Dr
 
 PSSBSTE<-read.xlsx("STE_Mapping_Atts_Draft.xlsx", detectDates = T, sheet="Draft STE Combined")#load the STE used by PSSB
 
+BCG_atts<-read.csv("ORWA_Attributes_20240417.csv")#load the BCG taxonomic hierarchy
+
 ##this function binds the textfiles from the taxa downloads from PSSB into one dataframe
 taxaBind <- function(file.path) {
   
@@ -32,10 +34,48 @@ PSSB_taxa<-unique(PSSB_taxa) #we're generating a list of all taxa in PSSB sample
 
 ###we want to see if any of the mapped taxa names need an STE update too
 PSSBmapping<-merge(PSSBmapping, PSSB_taxa, by.x=c("Taxon"), by.y=c("Taxon")) #merge the PSSB taxa list iwth the mapping dataframe
+
+
+##we need to remove the old taxonomic hierarchy, and replace with the correct hierarchy for the mapped taxa
+
+names(BCG_atts)
+BCG_atts[,c(1, 22,24:40)]
+
+PSSBmapping<-merge(PSSBmapping[,c("OTU_MetricCalc", "Mapped.Taxon.Serial.Number")], unique(BCG_atts[,c(1, 24:40)]), by.x=c("OTU_MetricCalc"), by.y=c("Taxon"), all.x=T)
+names(PSSB_taxa)
 names(PSSBmapping)
-PSSBmapping<-PSSBmapping[,c(4, 3, 8:29)]
+##the BCG hierarchy isn't the same as PSSB. Need to consolidate some levels into Species Group, then rename columns
+
+PSSBmapping[which(PSSBmapping$SpeciesComplex!=""&PSSBmapping$SpeciesGroup==""),"SpeciesGroup"]<-PSSBmapping[which(PSSBmapping$SpeciesComplex!=""&PSSBmapping$SpeciesGroup==""),"SpeciesComplex"]
+PSSBmapping[which(PSSBmapping$SpeciesSubGroup!=""&PSSBmapping$SpeciesGroup==""),"SpeciesGroup"]<-PSSBmapping[which(PSSBmapping$SpeciesSubGroup!=""&PSSBmapping$SpeciesGroup==""),"SpeciesSubGroup"]
+
+
+PSSBmapping$Superclass<-NA
+PSSBmapping$Infraclass<-NA
+PSSBmapping$Superorder<-NA
+PSSBmapping$Infraorder<-NA
+PSSBmapping$Custom.Subfamily<-NA
+PSSBmapping$Subtribe<-NA
+PSSBmapping$Subspecies<-NA
+
+
+##need to get the hierarchy in the right order
+names(PSSB_taxa)
+names(PSSBmapping)
+names(PSSBmapping[,c(2,1, 3, 4, 20, 5:6,21,22,  7:8, 23,9:10, 11,24, 12,13,25,14,16, 15,19, 26)])
+PSSBmapping<-PSSBmapping[,c(2,1, 3, 4, 20, 5:6,21,22,  7:8, 23,9:10, 11,24, 12,13,25,14,16, 15,19, 26)]
+
+
+names(PSSBmapping)
+
 missingmappedSTE<-PSSBmapping[!PSSBmapping$OTU_MetricCalc %in% PSSBSTE$Taxon,]#look for mapped taxa that aren't in the STE lookup
 missingmappedSTE<-subset(missingmappedSTE, !is.na(OTU_MetricCalc))#screen out taxa that don't have a map assigned.
+
+missingmappedSTE[is.na(missingmappedSTE)]<-""
+
+
+
+
 
 missingSTE<-PSSB_taxa[!PSSB_taxa$Taxon %in% PSSBSTE$Taxon,]##look for taxa in PSSB samples that are not in the STE lookup table. We'll need to check these again after the STE rules are manually applied-- if a higher taxonomic level applying the correct rules is in the STE table, no modifications to the STE lookup in PSSB are needed. 
 
