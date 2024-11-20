@@ -38,18 +38,21 @@ mapping<-merge(mapping, PSSB_taxa, by.x=c("Alternate.Name"), by.y=c("Taxon"), al
 missingBCGmapping<-subset(mapping, is.na(OTU_MetricCalc), select="Alternate.Name")##these are taxa in PSSB samples that have not been translated by the BCG working group. 
 write.csv(missingBCGmapping, "Missing_from_BCG_taxa_translator.csv")
 
-missingPSSBmapping<-subset(mapping, is.na(Preferred.Name)&Alternate.Name!=OTU_MetricCalc&OTU_MetricCalc!="DNI")##these are taxa in PSSB samples that don't have a mapping assigned in PSSB. 
+missingPSSBmapping<-subset(mapping, is.na(Preferred.Name)&((Alternate.Name!=OTU_MetricCalc&OTU_MetricCalc!="DNI")|is.na(OTU_MetricCalc)))##these are taxa in PSSB samples that don't have a mapping assigned in PSSB. 
+
+
+
 write.csv(missingPSSBmapping, "Missing_from_PSSB_mapping_table.csv")
 
 ###because there may be overlap between the last two, this next section will parse out the differences.
 
 missingPSSBmappingBCGexists<-missingPSSBmapping$Alternate.Name[!missingPSSBmapping$Alternate.Name %in% missingBCGmapping$Alternate.Name] ##these are taxa in PSSB samples that have a BCG translation, but do not have a mapping assigned in PSSB. Update the PSSB mapping to include these. 
 
-# missingBCG_PSSBmappingexists<-missingBCGmapping$Alternate.Name[!missingBCGmapping$Alternate.Name %in% missingPSSBmapping$Alternate.Name]##these are taxa in PSSB samples that do not have a BCG translation, but do have a mapping assigned in PSSB. Probably a result of BAS editing some taxa names in PSSB for clarity, formatting and accuracy (i.e. Rhabdomastix (Rhabdomastix (Rhabdomastix)) was edited in PSSB taxonomy to simply Rhabdomastix (Rhabdomastix)). Let Sean know about these name changes in PSSB so he can update the BCG translation table with the edited names. 
+missingBCG_PSSBmappingexists<-missingBCGmapping$Alternate.Name[missingBCGmapping$Alternate.Name %in% PSSBmapping$Alternate.Name]##these are taxa in PSSB samples that do not have a BCG translation, but do have a mapping assigned in PSSB. Probably a result of BAS editing some taxa names in PSSB for clarity, formatting and accuracy (i.e. Rhabdomastix (Rhabdomastix (Rhabdomastix)) was edited in PSSB taxonomy to simply Rhabdomastix (Rhabdomastix)). Let Sean know about these name changes in PSSB so he can update the BCG translation table with the edited names.
 
 missingBCGPSSB<-missingBCGmapping$Alternate.Name[missingBCGmapping$Alternate.Name %in% missingPSSBmapping$Alternate.Name]##these are taxa in PSSB samples that do not have a BCG translation, and do not have a mapping assigned in PSSB. Send these to Sean Sullivan once a year for updating the BCG translation tables.
 
-# missingBCGmapping$Alternate.Name[missingPSSBmapping$Alternate.Name %in% missingBCGmapping$Alternate.Name] ###this output should be identical to the object missingBCGPSSB
+missingBCGmapping$Alternate.Name[missingBCGmapping$Alternate.Name %in% missingPSSBmapping$Alternate.Name] ###this output should be identical to the object missingBCGPSSB
 
 ###this next section checks to see if existing mappings have changed since the last version of the BCG table.
 
